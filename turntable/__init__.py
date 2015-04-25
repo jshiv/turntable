@@ -1,3 +1,3 @@
 import utils
-import play
+import spin
 import press
