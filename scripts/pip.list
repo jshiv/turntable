@@ -1,0 +1,23 @@
+# General libraries
+pip install ${PIP_OPTIONS} coverage
+pip install ${PIP_OPTIONS} flake8
+pip install ${PIP_OPTIONS} ipython
+pip install ${PIP_OPTIONS} mock
+pip install ${PIP_OPTIONS} MySQL-python
+pip install ${PIP_OPTIONS} nose
+pip install ${PIP_OPTIONS} -I numpy==1.8.1   # required by CLAW
+pip install ${PIP_OPTIONS} -I pandas==0.9.0  # required by CLAW 
+pip install ${PIP_OPTIONS} pep8
+pip install ${PIP_OPTIONS} pep8-naming
+pip install ${PIP_OPTIONS} pyflakes
+
+# For future consideration
+#pip install ${PIP_OPTIONS} matplotlib
+#pip install ${PIP_OPTIONS} -I pylibmc 
+#pip install ${PIP_OPTIONS} scipy
+#pip install ${PIP_OPTIONS} seaborn
+
+# Internal
+# pip install ${PIP_OPTIONS} -i http://sjc04-eggbasket.teslamotors.com:8080/simple/ carlogs_analysis 
+# pip install ${PIP_OPTIONS} -i http://sjc04-eggbasket.teslamotors.com:8080/simple/ carlogs_reporting
+# pip install ${PIP_OPTIONS} -i http://sjc04-eggbasket.teslamotors.com:8080/simple/ claw_plugin

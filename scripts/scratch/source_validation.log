@@ -1,0 +1,481 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+VALIDATING SOURCE
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+RUNNING PYLINT ON /Users/jshiverick/Documents/root/repos/vinyl/vinyl
+************* Module vinyl
+C:  1, 0: Missing module docstring (missing-docstring)
+W:  1, 0: Relative import 'utils', should be 'vinyl.utils' (relative-import)
+W:  2, 0: Relative import 'mapper', should be 'vinyl.mapper' (relative-import)
+W:  3, 0: Relative import 'press', should be 'vinyl.press' (relative-import)
+************* Module vinyl.mapper
+C: 53, 0: Line too long (116/100) (line-too-long)
+C: 87, 0: Line too long (105/100) (line-too-long)
+C: 93, 0: Line too long (117/100) (line-too-long)
+C: 94, 0: Line too long (101/100) (line-too-long)
+R: 51, 0: Too many arguments (7/6) (too-many-arguments)
+C:123, 4: Invalid variable name "returnList" (invalid-name)
+C:125, 8: Invalid variable name "returnList" (invalid-name)
+W: 51,63: Unused argument 'quiet' (unused-argument)
+C:140, 0: Missing function docstring (missing-docstring)
+C:166, 0: Invalid argument name "runSeries" (invalid-name)
+W:185, 8: No exception type(s) specified (bare-except)
+C:205, 0: Missing function docstring (missing-docstring)
+C:213, 4: Invalid variable name "PROC" (invalid-name)
+C:217,12: Invalid variable name "ARGS" (invalid-name)
+C:221,12: Invalid variable name "ARGS" (invalid-name)
+C:224, 4: Invalid variable name "RES" (invalid-name)
+W:228,15: Catching too general exception Exception (broad-except)
+C:242, 0: Missing function docstring (missing-docstring)
+C:256, 0: Missing function docstring (missing-docstring)
+R:256, 0: Too many local variables (21/15) (too-many-locals)
+C:277, 4: Missing function docstring (missing-docstring)
+C:279,12: Invalid variable name "ARGS" (invalid-name)
+C:283,12: Invalid variable name "ARGS" (invalid-name)
+C:287, 4: Invalid variable name "PROC" (invalid-name)
+C:290, 8: Invalid variable name "ARGS" (invalid-name)
+C:295, 4: Invalid variable name "RES" (invalid-name)
+W:299,15: Catching too general exception Exception (broad-except)
+E:308, 8: Undefined variable 'shvinyl' (undefined-variable)
+W: 14, 0: Unused import shutil (unused-import)
+************* Module vinyl.press
+C: 48, 0: Line too long (104/100) (line-too-long)
+C: 74, 0: Line too long (103/100) (line-too-long)
+C:126, 0: Line too long (163/100) (line-too-long)
+C:212, 0: Line too long (107/100) (line-too-long)
+C:245, 0: Line too long (120/100) (line-too-long)
+C:269, 0: Line too long (102/100) (line-too-long)
+C:297, 0: Line too long (137/100) (line-too-long)
+C: 45, 0: Missing class docstring (missing-docstring)
+E: 87, 4: Method has no argument (no-method-argument)
+W:136,12: Unnecessary pass statement (unnecessary-pass)
+C:150, 0: Old-style class defined. (old-style-class)
+C:176, 8: Invalid variable name "methodToCall" (invalid-name)
+W:177, 8: Unused variable 'result' (unused-variable)
+C:180, 0: Missing class docstring (missing-docstring)
+E:209,16: Access to member 'series' before its definition line 211 (access-member-before-definition)
+W:211,16: Attribute 'series' defined outside __init__ (attribute-defined-outside-init)
+R:180, 0: Too few public methods (0/1) (too-few-public-methods)
+C:215, 0: Missing class docstring (missing-docstring)
+W:217, 4: __init__ method from base class 'RecordSetter' is not called (super-init-not-called)
+W:217, 4: __init__ method from base class 'SeriesLoader' is not called (super-init-not-called)
+W:260, 4: Attribute 'series' defined outside __init__ (attribute-defined-outside-init)
+W:261, 4: Attribute 'index_record' defined outside __init__ (attribute-defined-outside-init)
+R:215, 0: Too few public methods (0/1) (too-few-public-methods)
+C:302, 0: Missing function docstring (missing-docstring)
+W:329, 4: No exception type(s) specified (bare-except)
+W:336, 4: No exception type(s) specified (bare-except)
+C:343, 0: Black listed name "foo" (blacklisted-name)
+W:343,14: Unused argument 'var2' (unused-argument)
+W:343, 8: Unused argument 'var1' (unused-argument)
+W:343,20: Unused argument 'long_var_name' (unused-argument)
+W: 15, 0: Unused import sys (unused-import)
+W: 16, 0: Unused import os (unused-import)
+W: 33, 0: Unused numpy imported as np (unused-import)
+************* Module vinyl.utils
+C: 94, 0: Line too long (105/100) (line-too-long)
+C:130, 0: Line too long (103/100) (line-too-long)
+C:131, 0: Line too long (124/100) (line-too-long)
+W: 21, 0: No exception type(s) specified (bare-except)
+E: 46,18: Undefined variable 'set_timestamps' (undefined-variable)
+W: 52, 8: No exception type(s) specified (bare-except)
+E: 56,18: Undefined variable 'set_timestamps' (undefined-variable)
+C: 66, 0: Invalid argument name "cleanMemory" (invalid-name)
+W: 85,33: Redefining built-in 'input' (redefined-builtin)
+C: 83, 0: Invalid argument name "cleanDisk" (invalid-name)
+C: 83, 0: Missing function docstring (missing-docstring)
+C:112, 0: Invalid argument name "rootPath" (invalid-name)
+C:112, 0: Invalid argument name "pathString" (invalid-name)
+C:112, 0: Missing function docstring (missing-docstring)
+C:114, 4: Invalid variable name "regEx" (invalid-name)
+W:121, 0: Dangerous default value {} as argument (dangerous-default-value)
+C:121, 0: Invalid argument name "dirDict" (invalid-name)
+C:151, 4: Invalid variable name "rootPath" (invalid-name)
+C:160,12: Invalid variable name "rootPath" (invalid-name)
+C:162,12: Invalid variable name "rootPath" (invalid-name)
+C:171, 8: Invalid variable name "rootPath" (invalid-name)
+C:182, 0: Invalid function name "Walk" (invalid-name)
+W:204,14: Unused variable 'subdirs' (unused-variable)
+C:212, 0: Invalid function name "scanPath" (invalid-name)
+C:235, 4: Invalid variable name "pathList" (invalid-name)
+C:279, 8: Invalid attribute name "numPrints" (invalid-name)
+C:278, 8: Invalid attribute name "nLoops" (invalid-name)
+C:241, 0: Old-style class defined. (old-style-class)
+R:241, 0: Too many instance attributes (9/7) (too-many-instance-attributes)
+C:276, 4: Invalid argument name "nLoops" (invalid-name)
+C:276, 4: Invalid argument name "numPrints" (invalid-name)
+C:302, 4: Missing method docstring (missing-docstring)
+W:295, 8: Attribute 'tf' defined outside __init__ (attribute-defined-outside-init)
+C:306, 0: Invalid function name "displayAll" (invalid-name)
+C:306, 0: Invalid argument name "nLoops" (invalid-name)
+C:306, 0: Invalid argument name "numPrints" (invalid-name)
+C:327, 8: Invalid variable name "totalTime" (invalid-name)
+C:332,12: Invalid variable name "remainUnit" (invalid-name)
+C:335,12: Invalid variable name "remainUnit" (invalid-name)
+C:338,12: Invalid variable name "remainUnit" (invalid-name)
+W:319, 9: Unused variable 'disp_elapsed' (unused-variable)
+W:320, 9: Unused variable 'disp_avg' (unused-variable)
+C:346, 0: Invalid function name "timeUnit" (invalid-name)
+C:367, 8: Invalid variable name "unit_estEnd" (invalid-name)
+C:369, 8: Invalid variable name "unit_estEnd" (invalid-name)
+C:371, 8: Invalid variable name "unit_estEnd" (invalid-name)
+W:350, 4: Unused variable 'day' (unused-variable)
+E:400,13: Module 'numpy' has no 'isscalar' member (no-member)
+W: 15, 0: Unused import sys (unused-import)
+W: 16, 0: Unused import shutil (unused-import)
+************* Module vinyl.tests
+C:  1, 0: Missing module docstring (missing-docstring)
+************* Module vinyl.tests.mapper_tests
+C: 31, 0: Trailing whitespace (trailing-whitespace)
+C: 32, 0: Exactly one space required after :
+    f = lambda x:x**2.
+                ^ (bad-whitespace)
+C: 49, 0: Exactly one space required around comparison
+    assert sum(seq)==1240
+                   ^^ (bad-whitespace)
+C: 59, 0: Exactly one space required around comparison
+    assert sum(seq)==1240
+                   ^^ (bad-whitespace)
+W: 10, 0: Wildcard import nose.tools (wildcard-import)
+C: 19, 0: Missing function docstring (missing-docstring)
+C: 22, 0: Missing function docstring (missing-docstring)
+C: 25, 0: Missing function docstring (missing-docstring)
+W: 32, 4: Redefining name 'f' from outer scope (line 36) (redefined-outer-name)
+C: 29, 0: Missing function docstring (missing-docstring)
+C: 36, 0: Invalid function name "f" (invalid-name)
+C: 36, 0: Missing function docstring (missing-docstring)
+C: 42, 0: Missing function docstring (missing-docstring)
+C: 52, 0: Missing function docstring (missing-docstring)
+W: 10, 0: Unused import assert_true from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_less_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_list_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import set_trace from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import istest from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_set_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_items_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_almost_equals from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_equals from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_is_instance from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import make_decorator from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_greater_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is_not from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import eq_ from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_sequence_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_in from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_dict_contains_subset from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is_none from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import with_setup from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import nottest from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is_instance from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_greater from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_almost_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import raises from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_in from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_regexp_matches from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_dict_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_almost_equals from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_less from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_multi_line_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_equals from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_raises from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_regexp_matches from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is_not_none from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import TimeExpired from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_tuple_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_raises_regexp from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import timed from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import ok_ from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_false from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_almost_equal from wildcard import (unused-wildcard-import)
+W: 14, 0: Unused import datetime (unused-import)
+W: 15, 0: Unused pandas imported as pd (unused-import)
+************* Module vinyl.tests.stencil_tests
+C: 30, 0: Trailing whitespace (trailing-whitespace)
+W: 39, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 41, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C: 41, 0: No space allowed around keyword argument assignment
+	record = press.Record(test = 'test')
+                            ^ (bad-whitespace)
+W: 42, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C: 43, 0: Final newline missing (missing-final-newline)
+W: 43, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 10, 0: Wildcard import nose.tools (wildcard-import)
+C: 18, 0: Missing function docstring (missing-docstring)
+C: 21, 0: Missing function docstring (missing-docstring)
+C: 24, 0: Missing function docstring (missing-docstring)
+C: 28, 0: Missing function docstring (missing-docstring)
+C: 38, 0: Missing function docstring (missing-docstring)
+E: 42, 8: Instance of 'Record' has no 'test' member (no-member)
+W: 10, 0: Unused import assert_true from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_less_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_list_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import set_trace from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import istest from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_set_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_items_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_almost_equals from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_equals from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_is_instance from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import make_decorator from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_greater_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is_not from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import eq_ from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_sequence_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_in from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_dict_contains_subset from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is_none from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import with_setup from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import nottest from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is_instance from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_greater from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_almost_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import raises from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_in from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_regexp_matches from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_dict_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_almost_equals from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_less from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_multi_line_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_equals from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_raises from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_regexp_matches from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_is_not_none from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import TimeExpired from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_tuple_equal from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_raises_regexp from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import timed from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import ok_ from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_false from wildcard import (unused-wildcard-import)
+W: 10, 0: Unused import assert_not_almost_equal from wildcard import (unused-wildcard-import)
+W: 13, 0: Unused import datetime (unused-import)
+W: 14, 0: Unused pandas imported as pd (unused-import)
+R:  1, 0: Similar lines in 2 files
+==vinyl.tests.mapper_tests:13
+==vinyl.tests.stencil_tests:12
+import datetime
+import pandas as pd
+
+
+
+def setup():
+    print "SETUP!"
+
+def teardown():
+    print "TEAR DOWN!"
+
+def test_basic():
+    print "Test basic"
+
+ (duplicate-code)
+
+
+Report
+======
+485 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |7      |7          |=          |71.43       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |5      |5          |=          |40.00       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|method   |14     |14         |=          |92.86       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|function |36     |36         |=          |44.44       |16.67    |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    numpy (vinyl.press,vinyl.utils)
+    pandas (vinyl.press,vinyl.tests.stencil_tests,vinyl.tests.mapper_tests,vinyl.utils)
+    vinyl 
+      \-mapper (vinyl.tests.mapper_tests,vinyl)
+      \-press (vinyl.tests.stencil_tests,vinyl)
+      \-utils (vinyl.press,vinyl,vinyl.mapper)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |537    |45.59 |537      |=          |
++----------+-------+------+---------+-----------+
+|docstring |436    |37.01 |436      |=          |
++----------+-------+------+---------+-----------+
+|comment   |72     |6.11  |72       |=          |
++----------+-------+------+---------+-----------+
+|empty     |133    |11.29 |133      |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |15    |15       |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |1.181 |1.181    |=          |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |92     |92       |=          |
++-----------+-------+---------+-----------+
+|refactor   |6      |6        |=          |
++-----------+-------+---------+-----------+
+|warning    |133    |133      |=          |
++-----------+-------+---------+-----------+
+|error      |7      |7        |=          |
++-----------+-------+---------+-----------+
+
+
+
+% errors / warnings by module
+-----------------------------
+
++--------------------------+------+--------+---------+-----------+
+|module                    |error |warning |refactor |convention |
++==========================+======+========+=========+===========+
+|vinyl.utils               |42.86 |8.27    |16.67    |38.04      |
++--------------------------+------+--------+---------+-----------+
+|vinyl.press               |28.57 |11.28   |33.33    |15.22      |
++--------------------------+------+--------+---------+-----------+
+|vinyl.tests.stencil_tests |14.29 |38.35   |16.67    |8.70       |
++--------------------------+------+--------+---------+-----------+
+|vinyl.mapper              |14.29 |3.76    |33.33    |22.83      |
++--------------------------+------+--------+---------+-----------+
+|vinyl.tests.mapper_tests  |0.00  |36.09   |0.00     |13.04      |
++--------------------------+------+--------+---------+-----------+
+|vinyl                     |0.00  |2.26    |0.00     |1.09       |
++--------------------------+------+--------+---------+-----------+
+|vinyl.tests.__init__      |0.00  |0.00    |0.00     |1.09       |
++--------------------------+------+--------+---------+-----------+
+
+
+
+Messages
+--------
+
++--------------------------------+------------+
+|message id                      |occurrences |
++================================+============+
+|unused-wildcard-import          |88          |
++--------------------------------+------------+
+|invalid-name                    |42          |
++--------------------------------+------------+
+|missing-docstring               |26          |
++--------------------------------+------------+
+|line-too-long                   |14          |
++--------------------------------+------------+
+|unused-import                   |10          |
++--------------------------------+------------+
+|unused-variable                 |5           |
++--------------------------------+------------+
+|bare-except                     |5           |
++--------------------------------+------------+
+|unused-argument                 |4           |
++--------------------------------+------------+
+|mixed-indentation               |4           |
++--------------------------------+------------+
+|bad-whitespace                  |4           |
++--------------------------------+------------+
+|attribute-defined-outside-init  |4           |
++--------------------------------+------------+
+|undefined-variable              |3           |
++--------------------------------+------------+
+|relative-import                 |3           |
++--------------------------------+------------+
+|wildcard-import                 |2           |
++--------------------------------+------------+
+|trailing-whitespace             |2           |
++--------------------------------+------------+
+|too-few-public-methods          |2           |
++--------------------------------+------------+
+|super-init-not-called           |2           |
++--------------------------------+------------+
+|old-style-class                 |2           |
++--------------------------------+------------+
+|no-member                       |2           |
++--------------------------------+------------+
+|broad-except                    |2           |
++--------------------------------+------------+
+|unnecessary-pass                |1           |
++--------------------------------+------------+
+|too-many-locals                 |1           |
++--------------------------------+------------+
+|too-many-instance-attributes    |1           |
++--------------------------------+------------+
+|too-many-arguments              |1           |
++--------------------------------+------------+
+|redefined-outer-name            |1           |
++--------------------------------+------------+
+|redefined-builtin               |1           |
++--------------------------------+------------+
+|no-method-argument              |1           |
++--------------------------------+------------+
+|missing-final-newline           |1           |
++--------------------------------+------------+
+|duplicate-code                  |1           |
++--------------------------------+------------+
+|dangerous-default-value         |1           |
++--------------------------------+------------+
+|blacklisted-name                |1           |
++--------------------------------+------------+
+|access-member-before-definition |1           |
++--------------------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 4.52/10 (previous run: 4.52/10, +0.00)
+
+RUNNING NOSETESTS ON /Users/jshiverick/Documents/root/repos/vinyl/vinyl
+vinyl.tests.mapper_tests.test_basic ... ok
+vinyl.tests.mapper_tests.test_mapper_series ... ok
+vinyl.tests.mapper_tests.test_mapper_process ... ok
+vinyl.tests.mapper_tests.test_mapper_batch ... ok
+vinyl.tests.stencil_tests.test_basic ... ok
+vinyl.tests.stencil_tests.test_series_loader ... ok
+vinyl.tests.stencil_tests.test_record ... ok
+
+Name                           Stmts   Miss  Cover   Missing
+------------------------------------------------------------
+vinyl/__init__.py                  3      0   100%   
+vinyl/mapper.py                  150     87    42%   38, 77, 101-103, 115, 142-163, 171-202, 228-231, 245-253, 264-314
+vinyl/press.py                    92     57    38%   82-85, 89-106, 110-137, 142-143, 147, 156, 176-177, 209, 257-263, 284-299, 303, 325-340, 426
+vinyl/tests/__init__.py            0      0   100%   
+vinyl/tests/mapper_tests.py       30      3    90%   37-39
+vinyl/tests/stencil_tests.py      22      0   100%   
+vinyl/utils.py                   186    115    38%   21-22, 44-63, 69-80, 85-90, 99-109, 113-118, 149-179, 204-209, 235-238, 310, 333-338, 355, 357, 362, 364, 369, 371, 400-424
+------------------------------------------------------------
+TOTAL                            483    262    46%   
+----------------------------------------------------------------------
+Ran 7 tests in 4.090s
+
+OK
