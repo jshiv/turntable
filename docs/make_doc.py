@@ -4,7 +4,7 @@ import shutil
 import sphinx
 import argparse
 import subprocess
-from vinyl import utils
+from relpy import utils
 
 def clean():
 
@@ -253,7 +253,7 @@ def generate_class(classname,methods):
 def main():
 
 	# Filter on modules to build the doc for
-	mod_filter = ['turntable.mapper','turntable.press','turntable.utils']
+	mod_filter = ['turntable.press','turntable.spin','turntable.utils']
 
 	arglist = sys.argv
 	if len(arglist) > 2:

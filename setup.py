@@ -1,16 +1,21 @@
 print '''
-Installing turntable. Built by the Reliability Engineering Data Science Team at
+Installing turntable....
 
-    ############     ##########      ##########     ##             ###########
-     ##########       ########       #########      ##              #########
-         ##                          ##             ##
-         ##                          ##             ##
-         ##          ##########      ##########     ##              ##########
-         ##           ########       ##########     ##              ##########
-         ##                                  ##     ##              ##      ##
-         ##                                  ##     ##              ##      ##
-         ##          ##########      ##########     ##########      ##      ##
-         ##           ########       ##########      ########       ##      ##
+                         _
+_._ _..._ .-',     _.._(`))
+'-. `     '  /-._.-'    ',/
+   )         \            '.
+  / _    _    |             \
+|  a    a    /              |
+\   .-.                     ;  
+  '-('' ).-'       ,'       ;
+     '-;           |      .'
+        \           \    /
+        | 7  .__  _.-\   \
+        | |  |  ``/  /`  /
+       /,_|  |   /,_/   /
+          /,_/      '`-'
+          
 '''
 try:
     from setuptools import setup, find_packages
@@ -22,18 +27,16 @@ import sys
 
 
 config = {
-    'name':'turntable',
-    'description': 'turntable is a module that provides a framework for multi-processing pandas DataFrames',
-    'author': 'Jason Shiverick, Carlo Torniai, Anmol Garg, Ariel Shemtov',
-    'url': 'not yet',
-    'download_url': 'Where to download it.',
-    'author_email': 'jshiverick@teslamotors.com, ctorniai@teslamotors.com, agarg@teslamotors.com, ashemtov@teslamotors.com',
+    'description': 'TURNTABLE provides a functional framework for parallel processing DataFrames',
+    'author': 'Jason Shiverick',
+    'url': 'https://github.com/jshiv/turntable',
+    'download_url': 'https://github.com/jshiv/turntable',
+    'author_email': 'jshiv00@gmail.com',
+    'license':'MIT',
     'version': get_git_version(),
     
     'install_requires': [
-    'numpy',
     'pandas',
-    'nose',
     ],
 
     'packages': find_packages(),#['turntable'],

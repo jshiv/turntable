@@ -9,7 +9,7 @@ nosetests -w tests tests/stencil_tests.py:test_series_loader
 
 from nose.tools import *
 import time
-from turntable import play
+from turntable import spin
 
 import datetime
 import pandas as pd
@@ -31,7 +31,7 @@ def test_mapper_series():
     
     f = lambda x:x**2.
     seq = range(100)
-    assert sum(play.series(seq, f)) == 328350.0
+    assert sum(spin.series(seq, f)) == 328350.0
 
 def f(i):
     o = i*i
@@ -44,7 +44,7 @@ def test_mapper_process():
 
 
     seq = range(16)
-    seq = play.parallel(seq, f)
+    seq = spin.parallel(seq, f)
 
     assert sum(seq)==1240
 
@@ -54,7 +54,7 @@ def test_mapper_batch():
 
 
     seq = range(16)
-    seq = play.batch(seq, f)
+    seq = spin.batch(seq, f)
 
     assert sum(seq)==1240
 

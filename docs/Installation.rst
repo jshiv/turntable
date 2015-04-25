@@ -11,7 +11,7 @@ Below are the instructions for
 Python version support
 -----------------------
 
-Relpy requires Python 2.7.x. It is not tested to work with Python 3.x.
+turntable requires Python 2.7.x. It is not tested to work with Python 3.x.
 
 
 .. _installing_on_mac:
@@ -35,36 +35,16 @@ See for reference: http://continuum.io/blog/anaconda-python-3
 
 If you have chosen not to Install Anaconda make sure you have pip installed on your system
 
-2. Check if you already have a pip.conf file on your home directory::
 
- 	cd ~./pip/
- 	ls -la
+2. Install using pip as follows::
 
-If you don't see pip.conf create one as follows::
+	pip install turntable
 
-	vi ~/.pip/pip.conf
-
-3. Edit the pip.conf and paste the following content in it::
-
-	[global]
-	extra-index-url = http://sjc04-eggbasket.teslamotors.com:8080/simple/
-
-In order to edit the file in vi you need to type <esc> and then <i>
-
-After you've pasted the content save the file by typing::
-
-	<esc> :wq! <enter>
-
-4. Install using pip as follows::
-
-	pip install --pre relpy
-
-5. Test the installation. You can test your relpy installation with the following commands in terminal::
+4. Test the installation. You can test your relpy installation with the following commands in terminal::
 
 	python
-	>>> import relpy as rp
-	>>> rp.utils.date_extract("2014-11-07")
-	datetime.datetime(2014, 11, 7, 0, 0)
+	>>> import turntable
+
 
 
 .. _installing_on_windows:
@@ -94,14 +74,13 @@ See for reference: http://continuum.io/blog/anaconda-python-3
 
 3. Run easy_install in your shell::
 
-	easy_install -f http://sjc04-eggbasket.teslamotors.com:8080/simple/relpy/relpy
+	pip install turntable
 
 4. Test the installation. You can test your relpy installation with the following commands in terminal::
 
 	python
-	>>> import relpy as rp
-	>>> rp.utils.date_extract("2014-11-07")
-	datetime.datetime(2014, 11, 7, 0, 0)
+	>>> import turntable
+
 
 
 Dependencies
@@ -112,15 +91,5 @@ For windows, .exe downloads of dependencies can be found at this link: http://ww
 
 The following packages are installed:
 
-* ggplot
-* nolearn
-* nose
+
 * pandas
-* pygeocoder
-* pymongo
-* pymysql
-* pg8000
-* seaborn 
-* scikit-learn
-* simplejson
-* sqlalchemy
