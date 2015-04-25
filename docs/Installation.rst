@@ -40,7 +40,7 @@ If you have chosen not to Install Anaconda make sure you have pip installed on y
 
 	pip install turntable
 
-4. Test the installation. You can test your relpy installation with the following commands in terminal::
+4. Test the installation. You can test your turntable installation with the following commands in terminal::
 
 	python
 	>>> import turntable
@@ -76,7 +76,7 @@ See for reference: http://continuum.io/blog/anaconda-python-3
 
 	pip install turntable
 
-4. Test the installation. You can test your relpy installation with the following commands in terminal::
+4. Test the installation. You can test your turntable installation with the following commands in terminal::
 
 	python
 	>>> import turntable

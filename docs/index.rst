@@ -1,9 +1,9 @@
-.. relpy documentation master file, created by
+... turntable documentation master file, created by
    sphinx-quickstart on Tue Sep  2 15:01:20 2014.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-**relpy**: Tesla's data analysis toolkit for reliability engineering
+**turntable**: Bringing functional parallilism to DataFrames one Record at a time.
 =====================================================================
 
 
@@ -22,7 +22,7 @@ Contents:
    Installation
    Package overview <Pckgovervw>
    Module List <Modulelist>
-   How to document relpy <How_to_document_relpy>
+   How to document turntable <How_to_document_truntable>
    Todo list <Todolist>
 
 
