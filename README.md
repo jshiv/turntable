@@ -1,7 +1,7 @@
 TURNTABLE
 =====================================================================================================
 
-<img align="right" src="docs/stencil.jpeg" height="575" width="1400">
+<img align="top" src="docs/turntable.jpeg" height="300" width="400">
 
 vinyl is a workflow platform for multi-processsing a collection[list] of stencil.record objects.
 
