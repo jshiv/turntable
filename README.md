@@ -1,7 +1,7 @@
 TURNTABLE
 =====================================================================================================
 
-<img align="top" src="docs/turntable.jpeg" height="350" width="800">
+<img align="top" src="docs/pictures/turntable.jpeg" height="350" width="800">
 
 vinyl is a workflow platform for multi-processsing a collection[list] of stencil.record objects.
 
@@ -28,5 +28,3 @@ collection = turntable.spin.batch(collection, set_cost)
 record = collection[1]
 print record.series
 ```
-
-http://semver.org/
