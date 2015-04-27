@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# relpy documentation build configuration file, created by
+# turntable documentation build configuration file, created by
 # sphinx-quickstart on Tue Sep  2 14:45:15 2014.
 #
 # This file is execfile()d with the current directory set to its
@@ -72,7 +72,7 @@ autosummary_generate = False
 master_doc = 'index'
 
 # General information about the project.
-project = u'relpy'
+project = u'turntable'
 copyright = u'2014, Carlo Torniai, Jason Shiverick, Anmol Garg'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -224,7 +224,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'relpydoc'
+htmlhelp_basename = 'turntabledoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -244,7 +244,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'relpy.tex', u'relpy Documentation',
+  ('index', 'turntable.tex', u'turntable Documentation',
    u'Carlo Torniai, Jason Shiverick, Anmol Garg', 'manual'),
 ]
 
@@ -274,7 +274,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'relpy', u'relpy Documentation',
+    ('index', 'turntable', u'turntable Documentation',
      [u'Carlo Torniai, Jason Shiverick, Anmol Garg'], 1)
 ]
 
@@ -288,8 +288,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'relpy', u'relpy Documentation',
-   u'Carlo Torniai, Jason Shiverick, Anmol Garg', 'relpy', 'One line description of project.',
+  ('index', 'turntable', u'turntable Documentation',
+   u'Carlo Torniai, Jason Shiverick, Anmol Garg', 'turntable', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -309,13 +309,13 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'relpy'
+epub_title = u'turntable'
 epub_author = u'Carlo Torniai, Jason Shiverick, Anmol Garg'
 epub_publisher = u'Carlo Torniai, Jason Shiverick, Anmol Garg'
 epub_copyright = u'2014, Carlo Torniai, Jason Shiverick, Anmol Garg'
 
 # The basename for the epub file. It defaults to the project name.
-#epub_basename = u'relpy'
+#epub_basename = u'turntable'
 
 # The HTML theme for the epub output. Since the default themes are not optimized
 # for small screen space, using the same theme for HTML and epub output is
