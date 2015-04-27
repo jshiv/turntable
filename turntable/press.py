@@ -42,42 +42,48 @@ import traceback
 
 
 class RecordPress(object):
+    '''This class auto-seralizes any attributes assigned to an instance and clears them from memmory
+    when an attribute is called via the dot operator, it is read from disk
 
+    Parameters
+    ----------
+    pickle : Boolean [True]
+        if False, the instance will behave as a normal class
+    pickle_path : string ['./tmp']
+        the path underwhich the files will be stored
+
+    Methods
+    -------
+    clean_disk()
+        deletes all files stored by the instance
+    clean_memmory()
+        sets the in memory attribute values to None reducing the memory footprint
+
+
+    Examples
+    --------
+    This class can be encapsulated to be used elsewhere
+
+    >>>class NewClass(RecordPress):
+    >>>
+    >>>  def __init__(self, pickle = True, pickle_path = './tmp'):
+    >>>     self.pickle = pickle
+    >>>     self.class_path = turntable.utils.path2filename(pickle_path+'/'+self.__class__.__name__)[0]
+    >>>     self.pickles = []
+    >>>
+    >>>newClass = NewClass()
+    >>>newClass.x = 10
+    >>>y = newClass.x
+    >>>newClass.clean_disk()
+    '''
     def __init__(self, pickle=True, pickle_path='./tmp'):
-        '''This class auto-seralizes any attributes assigned to an instance and clears them from memmory
-        when an attribute is called via the dot operator, it is read from disk
-
+        '''
         Parameters
         ----------
-        pickle : Boolean [True]
-            if False, the instance will behave as a normal class
-        pickle_path : string ['./tmp']
-            the path underwhich the files will be stored
-
-        Methods
-        -------
-        clean_disk()
-            deletes all files stored by the instance
-        clean_memmory()
-            sets the in memory attribute values to None reducing the memory footprint
-
-
-        Examples
-        --------
-        This class can be encapsulated to be used elsewhere
-
-        >>>class NewClass(RecordPress):
-        >>>
-        >>>  def __init__(self, pickle = True, pickle_path = './tmp'):
-        >>>     self.pickle = pickle
-        >>>     self.class_path = turntable.utils.path2filename(pickle_path+'/'+self.__class__.__name__)[0]
-        >>>     self.pickles = []
-        >>>
-        >>>newClass = NewClass()
-        >>>newClass.x = 10
-        >>>y = newClass.x
-        >>>newClass.clean_disk()
+        pickle : pickle the class properties
+        pickle_path : where to pickle
         '''
+
         self.pickle = pickle  # required for over setattr override function
         self.class_path = turntable.utils.path2filename(
             pickle_path + '/' + self.__class__.__name__)[0]
@@ -149,7 +155,21 @@ class RecordPress(object):
 class RecordSetter:
 
     '''RecordSetter provides a simple interface for initalizing arguments passed in kwargs
-    and a runMethod method for running a class method by name'''
+    and a runMethod method for running a class method by name
+
+
+    Parameters
+    ----------
+    kwargs : name : value
+
+    Examples
+    --------
+    RecordSetter is a general python class that assigns **kwargs as instances of its self.
+
+    >>>obj = RecordSetter( name = 'me')
+    >>>print obj.name
+    me
+    '''
 
     def __init__(self, **kwargs):
         self.set_attributes(kwargs)
@@ -177,25 +197,25 @@ class RecordSetter:
 
 
 class SeriesLoader(object):
+    '''This class assignes given properties to a special pandas.Series propertie
 
+    self.series
+
+    Parameters
+    ----------
+    series : all atributes of the class get added to an internal pandas series
+
+
+    Examples
+    --------
+    This class can be encapsulated to be used elsewhere
+
+    >>>series_loader = SeriesLoader()
+    >>>series_loader.one = 'one'
+    >>>print series_loader.series
+    '''
     def __init__(self):
-        '''This class assignes given properties to a special pandas.Series propertie
 
-        self.series
-
-        Parameters
-        ----------
-        series : all atributes of the class get added to an internal pandas series
-
-
-        Examples
-        --------
-        This class can be encapsulated to be used elsewhere
-
-        >>>series_loader = SeriesLoader()
-        >>>series_loader.one = 'one'
-        >>>print series_loader.series
-        '''
 
     def __setattr__(self, name, value):
         # first set the attribute to the instance of the class
@@ -212,30 +232,31 @@ class SeriesLoader(object):
 
 
 class Record(RecordSetter, SeriesLoader):
+    '''
+    Record is a container object with a the special propertie "series"
 
+    any propertie added to Record will also be added to the pandas.Series
+
+    Properties
+    ----------
+    series : pandas.Series
+        container for parameters set to the instance
+
+    Methods
+    -------
+    set_attributes : assigns items of a dictionary to the class and to the series parameter
+    runMethod : runs a method by a string call
+
+    Examples
+    --------
+    lets see how we can add a propertie to the record object
+
+    >>>record = Record(first_item = 'one')
+    >>>record.second_item = 'two'
+    >>>print record.series
+    '''
     def __init__(self, **kwargs):
-        '''
-        Record is a container object with a the special propertie "series"
 
-        any propertie added to Record will also be added to the pandas.Series
-
-        Properties
-        ----------
-        series : pandas.Series
-            container for parameters set to the instance
-
-        Methods
-        -------
-        set_attributes : assigns items of a dictionary to the class and to the series parameter
-        runMethod : runs a method by a string call
-
-        Examples
-        --------
-
-            >>>record = Record(first_item = 'one')
-            >>>record.second_item = 'two'
-            >>>print record.series
-        '''
         self.set_attributes(kwargs)
 
 
