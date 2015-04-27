@@ -64,17 +64,17 @@ class RecordPress(object):
     --------
     This class can be encapsulated to be used elsewhere
 
-    >>>class NewClass(RecordPress):
+    >>> class NewClass(RecordPress):
     >>>
     >>>  def __init__(self, pickle = True, pickle_path = './tmp'):
     >>>     self.pickle = pickle
     >>>     self.class_path = turntable.utils.path2filename(pickle_path+'/'+self.__class__.__name__)[0]
     >>>     self.pickles = []
     >>>
-    >>>newClass = NewClass()
-    >>>newClass.x = 10
-    >>>y = newClass.x
-    >>>newClass.clean_disk()
+    >>> newClass = NewClass()
+    >>> newClass.x = 10
+    >>> y = newClass.x
+    >>> newClass.clean_disk()
     '''
     def __init__(self, pickle=True, pickle_path='./tmp'):
         '''
@@ -166,8 +166,8 @@ class RecordSetter:
     --------
     RecordSetter is a general python class that assigns **kwargs as instances of its self.
 
-    >>>obj = RecordSetter( name = 'me')
-    >>>print obj.name
+    >>> obj = RecordSetter( name = 'me')
+    >>> print obj.name
     me
     '''
 
@@ -210,9 +210,9 @@ class SeriesLoader(object):
     --------
     This class can be encapsulated to be used elsewhere
 
-    >>>series_loader = SeriesLoader()
-    >>>series_loader.one = 'one'
-    >>>print series_loader.series
+    >>> series_loader = SeriesLoader()
+    >>> series_loader.one = 'one'
+    >>> print series_loader.series
     '''
     def __init__(self):
         pass
@@ -251,9 +251,9 @@ class Record(RecordSetter, SeriesLoader):
     --------
     lets see how we can add a propertie to the record object
 
-    >>>record = Record(first_item = 'one')
-    >>>record.second_item = 'two'
-    >>>print record.series
+    >>> record = Record(first_item = 'one')
+    >>> record.second_item = 'two'
+    >>> print record.series
     '''
     def __init__(self, **kwargs):
 
