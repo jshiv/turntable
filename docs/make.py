@@ -1,6 +1,11 @@
 import os
 import sys
 import shutil
+import json
+
+
+path = os.getcwd()
+package = path.split(os.sep)[-2]
 
 
 def clean():
@@ -12,8 +17,8 @@ def clean():
     if os.path.exists('./source/modules.rst'):
         os.system('rm ./source/modules.rst')
 
-    if os.path.exists('./source/turntable.rst'):
-        os.system('rm ./source/turntable*')
+    if os.path.exists('./source/'+package+'.rst'):
+        os.system('rm ./source/'+package+'*')
 
 
 
@@ -23,7 +28,9 @@ def clean():
 def main():
 
 	clean()
-	os.system('sphinx-apidoc -o ./source ../turntable')
+    if os.path.exists('./source') == False:
+        os.system('sphinx-quickstart')
+	os.system('sphinx-apidoc -o ./source ../'+package+'')
 	os.system('make html')
 
 
