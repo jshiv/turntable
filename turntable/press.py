@@ -215,7 +215,7 @@ class SeriesLoader(object):
     >>>print series_loader.series
     '''
     def __init__(self):
-
+        pass
 
     def __setattr__(self, name, value):
         # first set the attribute to the instance of the class
