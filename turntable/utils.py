@@ -25,42 +25,42 @@ import errno
 import time
 
 
-def readfile(filename):
-    '''
-    Checks the extension on the filename and reads the file with the appropriate method.
-    *readfile* supports 'csv', 'xls', 'json' and 'pkl' formats.
+
+def catch(fcn, *args, **kwargs):
+    '''try:
+          retrun fcn(*args, **kwargs)
+       except:
+          print traceback
+            if 'spit' in kwargs.keys():
+                return kwargs['spit']
+
 
     Parameters
     ----------
-    filename : string, or file-like
-        Valid file path or file handle. The string could be a URL.
+    fcn : function
+    *args : unnamed parameters of fcn
+    **kwargs : named parameters of fcn
+        spit : returns the parameter named return in the exception
 
     Returns
     -------
-    The content of the file (DataFrame, array, etc...)
+    The expected output of fcn or prints the exception traceback'''
+    try:
+        # remove the special kwargs key "spit" and use it to return if it
+        # exists
+        spit = kwargs.pop('spit')
+    except:
+        spit = None
 
-    '''
-
-    if '.csv' in filename:
-        content = pd.read_csv(filename)
-        content = set_timestamps(content)
-        # if we happen to pull the index from a previous save, remove the extra
-        # column
-        try:
-            if all(content['Unnamed: 0'].values == content.index.values):
-                content.drop(labels=['Unnamed: 0'], axis=1, inplace=True)
-        except:
-            pass
-    elif '.xls' in filename:
-        content = pd.read_excel(filename)
-        content = set_timestamps(content)
-    elif '.json' in filename:
-        content = pd.read_json(filename)
-    elif '.pkl' in filename:
-        content = pd.read_pickle(filename)
-    else:
-        content = None
-    return content
+    try:
+        results = fcn(*args, **kwargs)
+        if results is not None:
+            return results
+    except:
+        # traceback.print_exc()
+        print traceback.format_exc()
+        if spit is not None:
+            return spit
 
 
 def to_pickle(obj, filename, cleanMemory=False):
@@ -372,53 +372,3 @@ def timeUnit(elapsed, avg, est_end):
 
     return [unit_elapsed, unit_avg, unit_estEnd]
 
-
-def float_to_string(float_array):
-    '''
-    Converts an array of  floats into a "readable"
-    array of strings (i.e. strings without too many
-    caracters, easier to print out on a plot or else).
-
-    Parameters
-    ----------
-    float_array : array-like
-        Array of floats
-
-    Returns
-    -------
-    string_array : list of strings
-        Array of strings made from the floats
-
-    Examples
-    --------
-    >>> float_ar = [12154.4861652, 2135.355,.0000168498,0.001265,125.35]
-    >>> utils.float_to_string(float_ar)
-    ['1.22e4', 2135, '1.68e-5', '1.26e-3', '125.3']
-
-    '''
-
-    scalar = np.isscalar(float_array)
-    if scalar:
-        float_array = [float_array]
-
-    string_array = []
-    for f in float_array:
-        es = format(f, 'e')
-        core, exp = es.split('e')
-        core = float(core)
-        exp = int(exp)
-        if exp > 3 or exp < -1:
-            core = round(core, 2)
-            sf = str(core) + 'e' + str(exp)
-        elif exp > -2 and exp < 3:
-            prec = 3 - abs(exp)
-            core = round(f, prec)
-            sf = str(core)
-        else:
-            sf = int(f)
-        string_array.append(sf)
-
-    if scalar:
-        return string_array[0]
-    else:
-        return string_array
