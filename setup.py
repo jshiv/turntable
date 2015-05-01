@@ -1,6 +1,7 @@
 print '''
 Installing turntable....
 
+
                          _
 _._ _..._ .-',     _.._(`))
 '-. `     '  /-._.-'    ',/
@@ -15,7 +16,6 @@ _._ _..._ .-',     _.._(`))
         | |  |  ``/  /`  /
        /,_|  |   /,_/   /
           /,_/      '`-'
-          
 '''
 try:
     from setuptools import setup, find_packages

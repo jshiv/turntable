@@ -60,7 +60,11 @@ def get_git_version(abbrev=6):
         version = release_version
 
     # Adapt to PEP 386 compatible versioning scheme
-    version = pep_386_adapt(version)
+    print 'before ',version
+    # version = pep_386_adapt(version)
+
+    version = semver(version)
+    print 'after ',version
 
     # If we still don't have anything, that's an error.
     if version is None:
@@ -85,6 +89,22 @@ def pep_386_adapt(version):
         parts = version.split('-')
         parts[-2] = 'post' + parts[-2]
         version = '.'.join(parts[:-1])
+
+    return version
+
+def semver(version):
+    '''http://semver.org/
+
+    auto increments PATCH
+    Given a version number MAJOR.MINOR.PATCH, increment the:
+
+    MAJOR version when you make incompatible API changes,
+    MINOR version when you add functionality in a backwards-compatible manner, and
+    PATCH version when you make backwards-compatible bug fixes.
+    '''
+    if version and '-' in version:
+        parts = version.replace('-','.').split('.')
+        version = '.'.join(parts[:2])+'.'+str(int(parts[-2])+1)
 
     return version
 

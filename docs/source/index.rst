@@ -6,6 +6,8 @@
 Welcome to turntable's documentation!
 =====================================
 
+**Date**: |today| **Version**: |version|
+
 Contents:
 
 .. toctree::

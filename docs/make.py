@@ -27,14 +27,14 @@ def clean():
 
 def main():
 
-	clean()
+    clean()
     if os.path.exists('./source') == False:
         os.system('sphinx-quickstart')
-	os.system('sphinx-apidoc -o ./source ../'+package+'')
-	os.system('make html')
+    os.system('sphinx-apidoc -o ./source ../'+package+'')
+    os.system('make html')
 
 
 
 
 if __name__ == '__main__':
-	main()
+    main()

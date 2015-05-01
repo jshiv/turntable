@@ -42,42 +42,48 @@ import traceback
 
 
 class RecordPress(object):
+    '''This class auto-seralizes any attributes assigned to an instance and clears them from memmory
+    when an attribute is called via the dot operator, it is read from disk
 
+    Parameters
+    ----------
+    pickle : Boolean [True]
+        if False, the instance will behave as a normal class
+    pickle_path : string ['./tmp']
+        the path underwhich the files will be stored
+
+    Methods
+    -------
+    clean_disk()
+        deletes all files stored by the instance
+    clean_memmory()
+        sets the in memory attribute values to None reducing the memory footprint
+
+
+    Examples
+    --------
+    This class can be encapsulated to be used elsewhere
+
+    >>> class NewClass(RecordPress):
+    >>>
+    >>>  def __init__(self, pickle = True, pickle_path = './tmp'):
+    >>>     self.pickle = pickle
+    >>>     self.class_path = turntable.utils.path2filename(pickle_path+'/'+self.__class__.__name__)[0]
+    >>>     self.pickles = []
+    >>>
+    >>> newClass = NewClass()
+    >>> newClass.x = 10
+    >>> y = newClass.x
+    >>> newClass.clean_disk()
+    '''
     def __init__(self, pickle=True, pickle_path='./tmp'):
-        '''This class auto-seralizes any attributes assigned to an instance and clears them from memmory
-        when an attribute is called via the dot operator, it is read from disk
-
+        '''
         Parameters
         ----------
-        pickle : Boolean [True]
-            if False, the instance will behave as a normal class
-        pickle_path : string ['./tmp']
-            the path underwhich the files will be stored
-
-        Methods
-        -------
-        clean_disk()
-            deletes all files stored by the instance
-        clean_memmory()
-            sets the in memory attribute values to None reducing the memory footprint
-
-
-        Examples
-        --------
-        This class can be encapsulated to be used elsewhere
-
-        >>>class NewClass(RecordPress):
-        >>>
-        >>>  def __init__(self, pickle = True, pickle_path = './tmp'):
-        >>>     self.pickle = pickle
-        >>>     self.class_path = turntable.utils.path2filename(pickle_path+'/'+self.__class__.__name__)[0]
-        >>>     self.pickles = []
-        >>>
-        >>>newClass = NewClass()
-        >>>newClass.x = 10
-        >>>y = newClass.x
-        >>>newClass.clean_disk()
+        pickle : pickle the class properties
+        pickle_path : where to pickle
         '''
+
         self.pickle = pickle  # required for over setattr override function
         self.class_path = turntable.utils.path2filename(
             pickle_path + '/' + self.__class__.__name__)[0]
@@ -149,7 +155,21 @@ class RecordPress(object):
 class RecordSetter:
 
     '''RecordSetter provides a simple interface for initalizing arguments passed in kwargs
-    and a runMethod method for running a class method by name'''
+    and a runMethod method for running a class method by name
+
+
+    Parameters
+    ----------
+    kwargs : name : value
+
+    Examples
+    --------
+    RecordSetter is a general python class that assigns **kwargs as instances of its self.
+
+    >>> obj = RecordSetter( name = 'me')
+    >>> print obj.name
+    me
+    '''
 
     def __init__(self, **kwargs):
         self.set_attributes(kwargs)
@@ -177,25 +197,25 @@ class RecordSetter:
 
 
 class SeriesLoader(object):
+    '''This class assignes given properties to a special pandas.Series propertie
 
+    self.series
+
+    Parameters
+    ----------
+    series : all atributes of the class get added to an internal pandas series
+
+
+    Examples
+    --------
+    This class can be encapsulated to be used elsewhere
+
+    >>> series_loader = SeriesLoader()
+    >>> series_loader.one = 'one'
+    >>> print series_loader.series
+    '''
     def __init__(self):
-        '''This class assignes given properties to a special pandas.Series propertie
-
-        self.series
-
-        Parameters
-        ----------
-        series : all atributes of the class get added to an internal pandas series
-
-
-        Examples
-        --------
-        This class can be encapsulated to be used elsewhere
-
-        >>>series_loader = SeriesLoader()
-        >>>series_loader.one = 'one'
-        >>>print series_loader.series
-        '''
+        pass
 
     def __setattr__(self, name, value):
         # first set the attribute to the instance of the class
@@ -212,30 +232,31 @@ class SeriesLoader(object):
 
 
 class Record(RecordSetter, SeriesLoader):
+    '''
+    Record is a container object with a the special propertie "series"
 
+    any propertie added to Record will also be added to the pandas.Series
+
+    Properties
+    ----------
+    series : pandas.Series
+        container for parameters set to the instance
+
+    Methods
+    -------
+    set_attributes : assigns items of a dictionary to the class and to the series parameter
+    runMethod : runs a method by a string call
+
+    Examples
+    --------
+    lets see how we can add a propertie to the record object
+
+    >>> record = Record(first_item = 'one')
+    >>> record.second_item = 'two'
+    >>> print record.series
+    '''
     def __init__(self, **kwargs):
-        '''
-        Record is a container object with a the special propertie "series"
 
-        any propertie added to Record will also be added to the pandas.Series
-
-        Properties
-        ----------
-        series : pandas.Series
-            container for parameters set to the instance
-
-        Methods
-        -------
-        set_attributes : assigns items of a dictionary to the class and to the series parameter
-        runMethod : runs a method by a string call
-
-        Examples
-        --------
-
-            >>>record = Record(first_item = 'one')
-            >>>record.second_item = 'two'
-            >>>print record.series
-        '''
         self.set_attributes(kwargs)
 
 
@@ -279,6 +300,20 @@ def build_collection(df, **kwargs):
     -------
     fleet : list
         list of Record() objects
+
+    Examples
+    --------
+    This is how we can generate a record collection from a DataFrame.
+
+    >>> import pandas as pd
+    >>> import turntable
+    >>>
+    >>> df = pd.DataFrame({'Artist':"""Michael Jackson, Pink Floyd, Whitney Houston, Meat Loaf, Eagles, Fleetwood Mac, Bee Gees, AC/DC""".split(', '),
+    >>> 'Album' :"""Thriller, The Dark Side of the Moon, The Bodyguard, Bat Out of Hell, Their Greatest Hits (1971-1975), Rumours, Saturday Night Fever, Back in Black""".split(', ')})
+    >>> collection = turntable.press.build_collection(df, my_favorite_record = 'nevermind')
+    >>> record = collection[0]
+    >>> print record.series
+
     '''
     print 'Generating the Record Collection...'
     print ' '
@@ -300,126 +335,3 @@ def build_collection(df, **kwargs):
 
 def collection_to_df(collection):
     return pd.concat([record.series for record in collection], axis=1).T
-
-
-def catch(fcn, *args, **kwargs):
-    '''try:
-          retrun fcn(*args, **kwargs)
-       except:
-          print traceback
-            if 'spit' in kwargs.keys():
-                return kwargs['spit']
-
-
-    Parameters
-    ----------
-    fcn : function
-    *args : unnamed parameters of fcn
-    **kwargs : named parameters of fcn
-        spit : returns the parameter named return in the exception
-
-    Returns
-    -------
-    The expected output of fcn or prints the exception traceback'''
-    try:
-        # remove the special kwargs key "spit" and use it to return if it
-        # exists
-        spit = kwargs.pop('spit')
-    except:
-        spit = None
-
-    try:
-        results = fcn(*args, **kwargs)
-        if results is not None:
-            return results
-    except:
-        # traceback.print_exc()
-        print traceback.format_exc()
-        if spit is not None:
-            return spit
-
-
-def foo(var1, var2, long_var_name='hi'):
-    r"""A one-line summary that does not use variable names or the
-    function name.
-
-    Several sentences providing an extended description. Refer to
-    variables using back-ticks, e.g. `var`.
-
-    Parameters
-    ----------------
-    var1 : array_like
-        Array_like means all those objects -- lists, nested lists, etc. --
-        that can be converted to an array.  We can also refer to
-        variables like `var1`.
-    var2 : int
-        The type above can either refer to an actual Python type
-    Long_variable_name : {'hi', 'ho'}, optional
-        Choices in brackets, default first when optional.
-
-    Returns
-    ----------------
-    type
-        Explanation of anonymous return value of type ``type``.
-    describe : type
-        Explanation of return value named `describe`.
-    out : type
-        Explanation of `out`.
-
-    Other Para
-    ----------------
-    only_seldom_used_keywords : type
-        Explanation
-    common_parameters_listed_above : type
-        Explanation
-
-    Raises
-    ------
-    BadException
-        Because you shouldn't have done that.
-
-    See Also
-    --------
-    otherfunc : relationship (optional)
-    newfunc : Relationship (optional), which could be fairly long, in which
-              case the line wraps here.
-    thirdfunc, fourthfunc, fifthfunc
-
-    Notes
-    -----
-    Notes about the implementation algorithm (if needed).
-
-    This can have multiple paragraphs.
-
-    You may include some math:
-
-    .. math:: X(e^{j\omega } ) = x(n)e^{ - j\omega n}
-
-    And even use a greek symbol like :math:`omega` inline.
-
-    References
-    ----------
-    Cite the relevant literature, e.g. [1]_.  You may also cite these
-    references in the notes section above.
-
-    .. [1] O. McNoleg, "The integration of GIS, remote sensing,
-       expert systems and adaptive co-kriging for environmental habitat
-       modelling of the Highland Haggis using object-oriented, fuzzy-logic
-       and neural-network techniques," Computers & Geosciences, vol. 22,
-       pp. 585-588, 1996.
-
-    Examples
-    --------
-    These are written in doctest format, and should illustrate how to
-    use the function.
-
-    >>> a=[1,2,3]
-    >>> print [x + 3 for x in a]
-    [4, 5, 6]
-    >>> print "a\n\nb"
-    a
-    b
-
-    """
-
-    pass
