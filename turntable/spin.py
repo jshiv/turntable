@@ -16,7 +16,7 @@ import shutil
 import turntable.utils
 
 
-def series(sequence, function, *args, **kwargs):
+def series(sequence, function, prints = 15, *args, **kwargs):
     '''
     series(sequence[, sequence, ...], function) -> list
 
@@ -24,6 +24,7 @@ def series(sequence, function, *args, **kwargs):
     ----------
     sequence : list of items to process
     function : function to process each item
+    prints : number of timer prints to the screen
 
 
     Return a list of the results of applying the function to the items of
@@ -40,7 +41,7 @@ def series(sequence, function, *args, **kwargs):
         verbose = True
 
     results = []
-    timer = turntable.utils.Timer(nLoops=len(sequence), numPrints=15, verbose=verbose)
+    timer = turntable.utils.Timer(nLoops=len(sequence), numPrints=prints, verbose=verbose)
     for subject in sequence:
         results.append(function(subject, *args, **kwargs))
         timer.loop()

@@ -24,7 +24,7 @@ import fnmatch
 import errno
 import time
 
-
+import random
 
 def catch(fcn, *args, **kwargs):
     '''try:
@@ -61,6 +61,28 @@ def catch(fcn, *args, **kwargs):
         print traceback.format_exc()
         if spit is not None:
             return spit
+
+
+def batch_list(sequence, batch_size, mod = 0, randomize = False):
+    '''
+    converts a list into a list of lists with equal batch_size
+
+    Parameters
+    ----------
+    sequence : list like
+        set of items to be set in batches
+    batch_size : int
+        length of each sub list
+    mod : int
+        remainder of list length devided by batch_size
+        mod = len(sequence) % batch_size
+    randomize = bool
+        should the initial sequence be randomized before being batched
+    '''
+    if randomize:
+        sequence = random.sample(sequence, len(sequence))
+    return [sequence[x:x + batch_size] for x in xrange(0, len(sequence) - mod, batch_size)]
+
 
 
 def to_pickle(obj, filename, cleanMemory=False):
