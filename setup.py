@@ -1,28 +1,19 @@
 print '''
 Installing turntable....
 
-
-                         _
-_._ _..._ .-',     _.._(`))
-'-. `     '  /-._.-'    ',/
-   )         \            '.
-  / _    _    |             \
-|  a    a    /              |
-\   .-.                     ;  
-  '-('' ).-'       ,'       ;
-     '-;           |      .'
-        \           \    /
-        | 7  .__  _.-\   \
-        | |  |  ``/  /`  /
-       /,_|  |   /,_/   /
-          /,_/      '`-'
+ _____ _   _ ____  _   _ _____  _    ____  _     _____ 
+|_   _| | | |  _ \| \ | |_   _|/ \  | __ )| |   | ____|
+  | | | | | | |_) |  \| | | | / _ \ |  _ \| |   |  _|  
+  | | | |_| |  _ <| |\  | | |/ ___ \| |_) | |___| |___ 
+  |_|  \___/|_| \_|_| \_| |_/_/   \_|____/|_____|_____|
+                                                       
 '''
 try:
     from setuptools import setup, find_packages
 except ImportError:
     from distutils.core import setup
 
-from version import *
+import versioneer
 import sys
 
 
@@ -33,7 +24,8 @@ config = {
     'download_url': 'https://github.com/jshiv/turntable',
     'author_email': 'jshiv00@gmail.com',
     'license':'MIT',
-    'version': get_git_version(),
+    'version': versioneer.get_version(),
+    'cmdclass': versioneer.get_cmdclass(),
     
     'install_requires': [
     'pandas',

@@ -65,11 +65,7 @@ author = u'Jason Shiverick'
 # built documents.
 #
 # The short X.Y version.
-try:
-  with open("../../RELEASE-VERSION", "r") as f:
-    version = f.readlines()[0]
-except:
-    version = '0.1.0'
+version = turntable.__version__
 # The full version, including alpha/beta/rc tags.
 release = 'dev'
 
