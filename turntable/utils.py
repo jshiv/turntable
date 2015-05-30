@@ -1,12 +1,4 @@
-'''
-Provides a collection of methods used across the package or of general utility.
-
-Example
-~~~~~~~
->>> from relpy import utils
->>>
->>> string_date = '2014-05-03'
->>> date = utils.date_extract(string_date)
+'''The utils module provides a collection of methods used across the package or of general utility.
 
 '''
 
@@ -14,17 +6,16 @@ import os
 import re
 import sys
 import shutil
+import errno
+import fnmatch
 import numpy as np
 import pandas as pd
 try:
     import cPickle as pickle
 except:
     import pickle
-import fnmatch
-import errno
-import time
-
 import random
+import time
 
 def catch(fcn, *args, **kwargs):
     '''try:
@@ -33,7 +24,6 @@ def catch(fcn, *args, **kwargs):
           print traceback
             if 'spit' in kwargs.keys():
                 return kwargs['spit']
-
 
     Parameters
     ----------
@@ -44,33 +34,34 @@ def catch(fcn, *args, **kwargs):
 
     Returns
     -------
-    The expected output of fcn or prints the exception traceback'''
+    The expected output of fcn or prints the exception traceback
+
+    '''
+
     try:
-        # remove the special kwargs key "spit" and use it to return if it
-        # exists
+        # remove the special kwargs key "spit" and use it to return if it exists
         spit = kwargs.pop('spit')
     except:
         spit = None
 
     try:
         results = fcn(*args, **kwargs)
-        if results is not None:
+        if results:
             return results
     except:
-        # traceback.print_exc()
         print traceback.format_exc()
-        if spit is not None:
+        if spit:
             return spit
 
 
 def batch_list(sequence, batch_size, mod = 0, randomize = False):
     '''
-    converts a list into a list of lists with equal batch_size
+    Converts a list into a list of lists with equal batch_size.
 
     Parameters
     ----------
-    sequence : list like
-        set of items to be set in batches
+    sequence : list
+        list of items to be placed in batches
     batch_size : int
         length of each sub list
     mod : int
@@ -78,49 +69,55 @@ def batch_list(sequence, batch_size, mod = 0, randomize = False):
         mod = len(sequence) % batch_size
     randomize = bool
         should the initial sequence be randomized before being batched
+    
     '''
+
     if randomize:
         sequence = random.sample(sequence, len(sequence))
-    return [sequence[x:x + batch_size] for x in xrange(0, len(sequence) - mod, batch_size)]
+
+    return [sequence[x:x + batch_size] for x in xrange(0, len(sequence)-mod, batch_size)]
 
 
 
-def to_pickle(obj, filename, cleanMemory=False):
+def to_pickle(obj, filename, clean_memory=False):
     '''http://stackoverflow.com/questions/7900944/read-write-classes-to-files-in-an-efficent-way'''
 
-    path, filename = path2filename(filename)
-
+    path, filename = path_to_filename(filename)
     create_dir(path)
 
     with open(path + filename, "wb") as output:
         pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
 
-    if cleanMemory:
+    if clean_memory:
         obj = None
 
     # setting the global object to None requires a return assignment
     return obj
 
 
-def from_pickle(filename, cleanDisk=False):
+def from_pickle(filename, clean_disk=False):
     # to deserialize the object
     with open(filename, "rb") as input:
         obj = pickle.load(input)  # protocol version is auto detected
 
-    if cleanDisk:
+    if clean_disk:
         os.remove(filename)
     return obj
 
 
-def path2filename(pathfile):
-    '''path2filename takes a path filename string and returns the split between the path and the filename
+def path_to_filename(pathfile):
+    '''
+    Takes a path filename string and returns the split between the path and the filename
 
     if filename is not given, filename = ''
     if path is not given, path = './'
+
     '''
+
     path = pathfile[:pathfile.rfind('/') + 1]
     if path == '':
         path = './'
+
     filename = pathfile[pathfile.rfind('/') + 1:len(pathfile)]
     if '.' not in filename:
         path = pathfile
@@ -128,19 +125,20 @@ def path2filename(pathfile):
 
     if (filename == '') and (path[len(path) - 1] != '/'):
         path += '/'
+
     return path, filename
 
 
-def add_path_string(rootPath='./results', pathString=None):
-    rootPath = path2filename(rootPath)[0]
+def add_path_string(root_path='./results', path_string=None):
+    rootPath = path_to_filename(rootPath)[0]
     regEx = '[.<>"!,:;*/ -]'
     if pathString is not None:
-        return path2filename(rootPath + re.sub(regEx, '_', pathString))[0]
+        return path_to_filename(root_path + re.sub(regEx, '_', path_string))[0]
     else:
-        return rootPath
+        return root_path
 
 
-def create_dir(path, dirDict={}):
+def create_dir(path, dir_dict={}):
     '''
     Tries to create a new directory in the given path.
     **create_dir** can also create subfolders according to the dictionnary given as second argument.
@@ -149,15 +147,16 @@ def create_dir(path, dirDict={}):
     ----------
     path : string
         string giving the path of the location to create the directory, either absolute or relative.
-    dirDict : dictionnary, optional (the default is {}, which means that no subfolders will be created)
-        Dictionnary ordering the creation of subfolders. Keys must be strings, and values either None or path dictionnaries.
+    dir_dict : dictionary, optional 
+        Dictionary ordering the creation of subfolders. Keys must be strings, and values either None or path dictionaries.
+        the default is {}, which means that no subfolders will be created
 
     Examples
     --------
 
     >>> path = './project'
-    >>> dirDict = {'dir1':None, 'dir2':{'subdir21':None}}
-    >>> utils.create_dir(path,dirDict)
+    >>> dir_dict = {'dir1':None, 'dir2':{'subdir21':None}}
+    >>> utils.create_dir(path, dir_dict)
 
     will create:
 
@@ -189,7 +188,7 @@ def create_dir(path, dirDict={}):
             if exception.errno != errno.EEXIST:
                 raise
 
-    for key in dirDict.keys():
+    for key in dir_dict.keys():
         rootPath = path + "/" + key
         try:
             os.makedirs(rootPath)
@@ -197,32 +196,31 @@ def create_dir(path, dirDict={}):
         except OSError as exception:
             if exception.errno != errno.EEXIST:
                 raise
-        if dirDict[key] is not None:
-            create_dir(rootPath, dirDict[key])
-
+        if dir_dict[key] is not None:
+            create_dir(rootPath, dir_dict[key])
 
 def Walk(root='.', recurse=True, pattern='*'):
-    """
-        Generator for walking a directory tree.
-        Starts at specified root folder, returning files
-        that match our pattern. Optionally will also
-        recurse through sub-folders.
+    ''' 
+    Generator for walking a directory tree.
+    Starts at specified root folder, returning files that match our pattern. 
+    Optionally will also recurse through sub-folders.
 
-        Parameters
-        ----------
-        root : string (default is *'.'*)
-            Path for the root folder to look in.
-        recurse : bool (default is *True*)
-            If *True*, will also look in the subfolders.
-        pattern : string (default is :emphasis:`'*'`, which means all the files are concerned)
-            The pattern to look for in the files' name.
+    Parameters
+    ----------
+    root : string (default is *'.'*)
+        Path for the root folder to look in.
+    recurse : bool (default is *True*)
+        If *True*, will also look in the subfolders.
+    pattern : string (default is :emphasis:`'*'`, which means all the files are concerned)
+        The pattern to look for in the files' name.
 
-        Returns
-        -------
-        generator
-            **Walk** yields a generator from the matching files paths.
+    Returns
+    -------
+    generator
+        **Walk** yields a generator from the matching files paths.
 
-    """
+    '''
+
     for path, subdirs, files in os.walk(root):
         for name in files:
             if fnmatch.fnmatch(name, pattern):
@@ -230,8 +228,7 @@ def Walk(root='.', recurse=True, pattern='*'):
         if not recurse:
             break
 
-
-def scanPath(root='.', recurse=False, pattern='*'):
+def scan_path(root='.', recurse=False, pattern='*'):
     '''
     Runs a loop over the :doc:`Walk<relpy.utils.Walk>` Generator
     to find all file paths in the root directory with the given
@@ -249,22 +246,20 @@ def scanPath(root='.', recurse=False, pattern='*'):
 
     Returns
     -------
-    pathList : list
-        The list of all the matching files paths.
+    path_list : list
+        list of all the matching files paths.
 
     '''
 
-    pathList = []
+    path_list = []
     for path in Walk(root=root, recurse=recurse, pattern=pattern):
-        pathList.append(path)
-    return pathList
+        path_list.append(path)
+    return path_list
 
 
 class Timer:
 
-    '''
-
-    Timer that calculates time remaining for a process and the percent complete
+    '''Timer that calculates time remaining for a process and the percent complete
 
     .. todo::
 
