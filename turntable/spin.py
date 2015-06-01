@@ -1,10 +1,9 @@
-'''parallel contains best practices for parallel processing turntable.utilsities
-	Authors: Jason Shiverick <jshiverick@teslamotors.com>
-			 Carlo Torniai <ctorniai@teslamotors.com>
+'''The spin module contains tools to process Record Collections in either series
+or parallel.
+
+Thanks to chriskiehl http://chriskiehl.com/article/parallelism-in-one-line/
 '''
 
-# import multiprocessing tools (source:
-# http://chriskiehl.com/article/parallelism-in-one-line/)
 import multiprocessing as mp  # for processes
 from multiprocessing.dummy import Pool as ThreadPool  # for threads
 
@@ -16,23 +15,28 @@ import shutil
 import turntable.utils
 
 
-def series(sequence, function, prints = 15, *args, **kwargs):
+def series(collection, method, prints = 15, *args, **kwargs):
     '''
-    series(sequence[, sequence, ...], function) -> list
+    Processes a collection in series 
 
     Parameters
     ----------
-    sequence : list of items to process
-    function : function to process each item
-    prints : number of timer prints to the screen
+    collection : list
+        list of Record objects
+    method : method to call on each Record
+    prints : int
+        number of timer prints to the screen
 
-
-    Return a list of the results of applying the function to the items of
-    the argument sequence(s).  If more than one sequence is given, the
-    function is called with an argument list consisting of the corresponding
-    item of each sequence, substituting None for missing values when not all
-    sequences have the same length.  If the function is None, return a list of
-    the items of the sequence (or a list of tuples if more than one sequence).
+    Returns
+    -------
+    collection : list
+        list of Record objects after going through method called
+    
+    If more than one collection is given, the function is called with an argument list 
+    consisting of the corresponding item of each collection, substituting None for 
+    missing values when not all collection have the same length.  
+    If the function is None, return the original collection (or a list of tuples if multiple collections).
+    
     '''
 
     if 'verbose' in kwargs.keys():
@@ -41,13 +45,12 @@ def series(sequence, function, prints = 15, *args, **kwargs):
         verbose = True
 
     results = []
-    timer = turntable.utils.Timer(nLoops=len(sequence), numPrints=prints, verbose=verbose)
-    for subject in sequence:
-        results.append(function(subject, *args, **kwargs))
+    timer = turntable.utils.Timer(nLoops=len(collection), numPrints=prints, verbose=verbose)
+    for subject in collection:
+        results.append(method(subject, *args, **kwargs))
         timer.loop()
     timer.fin()
     return results
-
 
 def batch(sequence, function, processes=None, batch_size=None, quiet=False,
           kwargs_to_dump=None, args=None, **kwargs):
@@ -77,23 +80,6 @@ def batch(sequence, function, processes=None, batch_size=None, quiet=False,
     if mod != 0:
         batch_list[len(batch_list) - 1] += sequence[-mod:]
     print 'number of batches =', len(batch_list)
-
-    # #if the sequence is shorter than batch_size
-    # #the system will run parallel to completion in one iteration
-    # if batch_size >= len(sequence):
-    # 	verbose = False
-    # else:
-    # 	verbose = (not quiet)
-
-    # timer = turntable.utils.Timer(nLoops = len(batch_list), numPrints = len(batch_list), verbose = verbose)
-    # #run the list of batches in series
-    # tic = time.time()
-    # returnList = []
-    # for batch in batch_list:
-    # 	#Process each batch in parallel
-    # 	batch = thread(function = function, sequence = batch, processes = processes, runSeries = False, quiet = quiet)
-    # 	[returnList.append(subject) for subject in batch]#bring all previously runs into a single list
-    # 	timer.loop()
 
     # New args
     if args is None:
@@ -136,8 +122,6 @@ def batch(sequence, function, processes=None, batch_size=None, quiet=False,
 
     return returnList
 
-
-
 def new_function_batch(sequence, function, *args, **kwargs):
 
     proc_name = mp.current_process().name
@@ -163,9 +147,7 @@ def new_function_batch(sequence, function, *args, **kwargs):
     # print proc_name+' ends in '+str(time.time()-tic)
     return results
 
-
-def thread(
-        function, sequence, cores=None, runSeries=False, quiet=False):
+def thread(function, sequence, cores=None, runSeries=False, quiet=False):
     '''sets up the threadpool with map for parallel processing'''
 
     # Make the Pool of workes
@@ -201,7 +183,6 @@ def thread(
     # abc = map(functools.partial(sb.dist, distName = 'weibull'), wbldfList)
 
     return results
-
 
 def parallel(sequence, function, processes=None, args=None, **kwargs):
 
@@ -239,7 +220,6 @@ def parallel(sequence, function, processes=None, args=None, **kwargs):
 
     return RES
 
-
 def new_function_dumping(
         args_to_load_names, function, main_arg, *args, **kwargs):
 
@@ -252,7 +232,6 @@ def new_function_dumping(
     else:
         res = function(main_arg, **kwargs)
     return res
-
 
 def process_dump(
         sequence,

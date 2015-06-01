@@ -1,47 +1,16 @@
-"""This is the docstring for the example.py module.  Modules names should
-have short, all-lowercase names.  The module name may have underscores if
-this improves readability.
+'''The press module is used to create Record Collections.
 
-Every module should have a docstring at the very top of the file.  The
-module's docstring may extend over multiple lines.  If your docstring does
-extend over multiple lines, the closing three quotation marks must be on
-a line by itself, preferably preceeded by a blank line.
-
-"""
-# uncomment the following line to use python 3 features
-#from __future__ import division, absolute_import, print_function
+'''
 
 import shutil
 import sys
-import os  # standard library imports first
-
-# Do NOT import using *, e.g. from numpy import *
-#
-# Import the module using
-#
-#   import numpy
-#
-# instead or import individual functions as needed, e.g
-#
-#  from numpy import array, zeros
-#
-# If you prefer the use of abbreviated module names, we suggest the
-# convention used by NumPy itself::
-
-
+import os
 import pandas as pd
-
 import turntable.utils
-#import parallel
 import traceback
 
-
-# These abbreviated names are not to be used in docstrings; users must
-# be able to paste and execute docstrings after importing only the
-# numpy module itself, unabbreviated.
-
-
 class RecordPress(object):
+
     '''This class auto-seralizes any attributes assigned to an instance and clears them from memmory
     when an attribute is called via the dot operator, it is read from disk
 
@@ -68,20 +37,23 @@ class RecordPress(object):
     >>>
     >>>  def __init__(self, pickle = True, pickle_path = './tmp'):
     >>>     self.pickle = pickle
-    >>>     self.class_path = turntable.utils.path2filename(pickle_path+'/'+self.__class__.__name__)[0]
+    >>>     self.class_path = turntable.utils.path_to_filename(pickle_path+'/'+self.__class__.__name__)[0]
     >>>     self.pickles = []
     >>>
     >>> newClass = NewClass()
     >>> newClass.x = 10
     >>> y = newClass.x
     >>> newClass.clean_disk()
+
     '''
+
     def __init__(self, pickle=True, pickle_path='./tmp'):
         '''
         Parameters
         ----------
         pickle : pickle the class properties
         pickle_path : where to pickle
+
         '''
 
         self.pickle = pickle  # required for over setattr override function
@@ -105,7 +77,7 @@ class RecordPress(object):
             if self.pickle & (name in self.pickles):
                 # print "Reading disk: ", self.class_path + name + '.pkl'
                 return turntable.utils.from_pickle(
-                    filename=self.class_path + name + '.pkl', cleanDisk=False)
+                    filename=self.class_path + name + '.pkl', clean_disk=False)
             else:  # otherwise return the attribute from the class instance
                 # print "Reading memory: ", name
                 return object.__getattribute__(*args)
@@ -118,28 +90,25 @@ class RecordPress(object):
         if self.pickle:
             # if the name of the assignend attribute is not a required name, go
             # ahead and pickle it
-            if any(
-                    [attr in name for attr in ['pickle', 'class_path', 'pickles']]) == False:
+            if any([attr in name for attr in ['pickle', 'class_path', 'pickles']]) == False:
                 return_value = turntable.utils.to_pickle(
                     obj=value,
-                    filename=self.class_path +
-                    name +
-                    '.pkl',
-                    cleanMemory=True)
+                    filename=self.class_path+name+'.pkl', 
+                    clean_memory=True)
                 # return_value = None #for testing memmory
                 self.__dict__[name] = return_value
-                # turntable.utils.to_pickle(obj = value, filename = self.class_path + name + '.pkl', cleanMemory = False) #use this line to not default memory clearing
-                # add the name to the list of pickled attributes, so we know
-                # which attributes have been pickled
+                # use the below line to not default memory clearing
+                # turntable.utils.to_pickle(obj = value, filename = self.class_path + name + '.pkl', clean_memory = False) 
+                # add the name to the list of pickled attributes, so we know which attributes have been pickled
                 self.pickles.append(name)
                 self.pickles = list(set(self.pickles))
-                # print "writing to disk: ", self.class_path + name + '.pkl'
-            else:
-                pass
-                # print "writing to memory: ", name
-        else:
-            pass
-            print  # "writing to memory: ", name
+        #         print "writing to disk: ", self.class_path + name + '.pkl'
+        #     else:
+        #         pass
+        #         print "writing to memory: ", name
+        # else:
+        #     pass
+        #     print "writing to memory: ", name
 
     def clean_memory(self):
         '''sets all attribute values from the attribute list pickles to None
@@ -155,7 +124,7 @@ class RecordPress(object):
 class RecordSetter:
 
     '''RecordSetter provides a simple interface for initalizing arguments passed in kwargs
-    and a runMethod method for running a class method by name
+    and a run method for running a class method by name
 
 
     Parameters
@@ -164,11 +133,12 @@ class RecordSetter:
 
     Examples
     --------
-    RecordSetter is a general python class that assigns **kwargs as instances of its self.
+    RecordSetter is a general python class that assigns **kwargs as instances of it self.
 
-    >>> obj = RecordSetter( name = 'me')
+    >>> obj = RecordSetter(name = 'me')
     >>> print obj.name
     me
+
     '''
 
     def __init__(self, **kwargs):
@@ -186,20 +156,24 @@ class RecordSetter:
             where keys are attributes names and values attributes values.
 
         '''
+
         for key, value in kwargs.items():
             setattr(self, key, value)
             # print key, value
 
     def run_method(self, method):
-        '''call a specied method by name using runMethod'''
-        methodToCall = getattr(self, method)
-        result = methodToCall()
+        '''
+        Calls a specied method by name using run_method
+
+        '''
+
+        method_to_call = getattr(self, method)
+        result = method_to_call()
 
 
 class SeriesLoader(object):
-    '''This class assignes given properties to a special pandas.Series propertie
 
-    self.series
+    '''SeriesLoader assigns given properties to a special pandas.Series property: self.series.
 
     Parameters
     ----------
@@ -213,14 +187,16 @@ class SeriesLoader(object):
     >>> series_loader = SeriesLoader()
     >>> series_loader.one = 'one'
     >>> print series_loader.series
+
     '''
+
     def __init__(self):
         pass
 
     def __setattr__(self, name, value):
         # first set the attribute to the instance of the class
         object.__setattr__(self, name, value)
-        # if the name of the assignend attribute is not a required name, go
+        # if the name of the assigned attribute is not a required name, go
         # ahead and pickle it
         blacklisted_keys = ['series']
         if any([attr in name for attr in blacklisted_keys]) == False:
@@ -232,10 +208,9 @@ class SeriesLoader(object):
 
 
 class Record(RecordSetter, SeriesLoader):
-    '''
-    Record is a container object with a the special propertie "series"
-
-    any propertie added to Record will also be added to the pandas.Series
+    
+    '''Record is a container object with the special property "series". Any 
+    property added to Record will also be added to the pandas.Series
 
     Properties
     ----------
@@ -255,68 +230,72 @@ class Record(RecordSetter, SeriesLoader):
     >>> record.second_item = 'two'
     >>> print record.series
     '''
-    def __init__(self, **kwargs):
 
+    def __init__(self, **kwargs):
         self.set_attributes(kwargs)
 
 
-def load_record(index_series_touple, kwargs):
+def load_record(index_series_tuple, kwargs):
     '''
-    generates an instance of Record() from a touple of the form (index, pandas.Series) with associated parameters kwargs
+    Generates an instance of Record() from a tuple of the form (index, pandas.Series) 
+    with associated parameters kwargs
 
     Paremeters
     ----------
-    index_series_touple : (index, pandas.Series)
+    index_series_tuple : tuple
+        tuple consisting of (index, pandas.Series)
     kwargs : dict
         aditional arguments
 
     Returns
     -------
-    Record()
+    Record : object
+
     '''
-    index_record = index_series_touple[0]
-    series = index_series_touple[1]
+
+    index_record = index_series_tuple[0]
+    series = index_series_tuple[1]
     record = Record()
     record.series = series
     record.index_record = index_record
     record.set_attributes(kwargs)
     return record
 
-
 def build_collection(df, **kwargs):
     '''
-    build_collection generates a list of Record objects given a population DataFrame.
-    Each record instance has a series attribute which is a pandas.Series of the same attributes in df.
-    Optional datasets can be passed in through kwargs which
-    will be included by the name of each object
+    Generates a list of Record objects given a DataFrame.
+    Each Record instance has a series attribute which is a pandas.Series of the same attributes 
+    in the DataFrame.
+    Optional data can be passed in through kwargs which will be included by the name of each object.
 
     parameters
     ----------
     df : pandas.DataFrame
-        each record represents a one individual from a population
     kwargs : alternate arguments to be saved by name to the series of each object
 
     Returns
     -------
-    fleet : list
-        list of Record() objects
+    collection : list
+        list of Record objects where each Record represents one row from a dataframe
 
     Examples
     --------
-    This is how we can generate a record collection from a DataFrame.
+    This is how we generate a Record Collection from a DataFrame.
 
     >>> import pandas as pd
     >>> import turntable
     >>>
-    >>> df = pd.DataFrame({'Artist':"""Michael Jackson, Pink Floyd, Whitney Houston, Meat Loaf, Eagles, Fleetwood Mac, Bee Gees, AC/DC""".split(', '),
-    >>> 'Album' :"""Thriller, The Dark Side of the Moon, The Bodyguard, Bat Out of Hell, Their Greatest Hits (1971-1975), Rumours, Saturday Night Fever, Back in Black""".split(', ')})
+    >>> df = pd.DataFrame({'Artist':"""Michael Jackson, Pink Floyd, Whitney Houston, Meat Loaf, 
+        Eagles, Fleetwood Mac, Bee Gees, AC/DC""".split(', '),
+    >>> 'Album' :"""Thriller, The Dark Side of the Moon, The Bodyguard, Bat Out of Hell, 
+        Their Greatest Hits (1971-1975), Rumours, Saturday Night Fever, Back in Black""".split(', ')})
     >>> collection = turntable.press.build_collection(df, my_favorite_record = 'nevermind')
     >>> record = collection[0]
     >>> print record.series
 
     '''
-    print 'Generating the Record Collection...'
-    print ' '
+
+    print 'Generating the Record Collection...\n'
 
     df['index_original'] = df.index
     df.reset_index(drop=True, inplace=True)
@@ -327,11 +306,22 @@ def build_collection(df, **kwargs):
         d = df.T.to_dict(outtype='series')
 
     collection = [load_record(item, kwargs) for item in d.items()]
-
-    #collection = parallelBox.batch(d.items(), load_record, nb_proc=None, batchSize=None, quiet=True, kwargs_to_dump=None, args = kwargs)
-
     return collection
 
-
 def collection_to_df(collection):
+    ''' 
+    Converts a collection back into a pandas DataFrame
+
+    parameters
+    ----------
+    collection : list
+        list of Record objects where each Record represents one row from a dataframe
+
+    Returns
+    -------
+    df : pandas.DataFrame
+        DataFrame of length=len(collection) where each row represents one Record 
+
+    '''
+
     return pd.concat([record.series for record in collection], axis=1).T
