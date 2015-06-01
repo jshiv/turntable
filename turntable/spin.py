@@ -52,7 +52,7 @@ def series(collection, method, prints = 15, *args, **kwargs):
     timer.fin()
     return results
 
-def batch(collection, function, processes=None, batch_size=None, quiet=False,
+def batch(sequence, function, processes=None, batch_size=None, quiet=False,
           kwargs_to_dump=None, args=None, **kwargs):
     '''runs a process in series for batches where each batch is run parallel over the number of processes specified.
     Allows for aggregation and incremental storage and runs the in memory processes
