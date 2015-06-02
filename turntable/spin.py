@@ -37,6 +37,14 @@ def series(collection, method, prints = 15, *args, **kwargs):
     missing values when not all collection have the same length.  
     If the function is None, return the original collection (or a list of tuples if multiple collections).
     
+    Example
+    -------
+    adding 2 to every number in a range
+
+    >>> import turntable
+    >>> collection = range(100)
+    >>> method = lambda x: x + 2
+    >>> collection = turntable.spin.series(collection, method)
     '''
 
     if 'verbose' in kwargs.keys():
@@ -52,45 +60,74 @@ def series(collection, method, prints = 15, *args, **kwargs):
     timer.fin()
     return results
 
-def batch(sequence, function, processes=None, batch_size=None, quiet=False,
+def batch(collection, method, processes=None, batch_size=None, quiet=False,
           kwargs_to_dump=None, args=None, **kwargs):
-    '''runs a process in series for batches where each batch is run parallel over the number of processes specified.
-    Allows for aggregation and incremental storage and runs the in memory processes
+    '''Processes a collection in parallel batches, 
+    each batch processes in series on a single process.
+    Running batches in parallel can be more effficient that splitting a list across cores as in spin.parallel 
+    because of parallel processing has high IO requirements.
 
-    sequence is an array of car instances
-    batch_size is the specified size of each batch. defaults to len(sequence)/processes
-    processes is the number of processes to use
-            Defaults to the number processes multiprocessing calculates up to a max of 20'''
+    Parameters
+    ----------
+    collection : list
+        i.e. list of Record objects
+    method : method to call on each Record
+    processes : int
+        number of processes to run on [defaults to number of cores on machine]
+    batch_size : int
+        lenght of each batch [defaults to number of elements / number of processes]
+
+    Returns
+    -------
+    collection : list
+        list of Record objects after going through method called
+
+    Example
+    -------
+    adding 2 to every number in a range
+
+    >>> import turntable
+    >>> collection = range(100)
+    >>> def jam(record):
+    >>>     return record + 2
+    >>> collection = turntable.spin.batch(collection, jam)
+
+    Note
+    ----
+
+    lambda functions do not work in parallel
+
+    '''
 
     if processes is None:
         # default to the number of processes, not exceeding 20 or the number of
         # subjects
-        processes = min(mp.cpu_count(), 20, len(sequence))
+        processes = min(mp.cpu_count(), 20, len(collection))
 
     if batch_size is None:
         # floor divide rounds down to nearest int
-        batch_size = max(len(sequence) // processes, 1)
+        batch_size = max(len(collection) // processes, 1)
     print 'size of each batch =', batch_size
 
-    mod = len(sequence) % processes
+    mod = len(collection) % processes
     # batch_list is a list of cars broken in to batch size chunks
-    batch_list = [sequence[x:x + batch_size]
-                  for x in xrange(0, len(sequence) - mod, batch_size)]
+    batch_list = [collection[x:x + batch_size]
+                  for x in xrange(0, len(collection) - mod, batch_size)]
     # remainder handling
     if mod != 0:
-        batch_list[len(batch_list) - 1] += sequence[-mod:]
+        batch_list[len(batch_list) - 1] += collection[-mod:]
     print 'number of batches =', len(batch_list)
 
     # New args
     if args is None:
-        args = function
+        args = method
     else:
         if isinstance(args, tuple) == False:
             args = (args,)
-        args = (function,) + args
+        args = (method,) + args
 
-    # Applying the mp function w/ or w/o dumping using the custom operator
-    # function
+    # Applying the mp method w/ or w/o dumping using the custom operator
+    # method
     if kwargs_to_dump is None:
         res = parallel(
             batch_list,
@@ -122,7 +159,7 @@ def batch(sequence, function, processes=None, batch_size=None, quiet=False,
 
     return returnList
 
-def new_function_batch(sequence, function, *args, **kwargs):
+def new_function_batch(sequence, method, *args, **kwargs):
 
     proc_name = mp.current_process().name
     print proc_name + ' starts'
@@ -131,7 +168,7 @@ def new_function_batch(sequence, function, *args, **kwargs):
     results = []
     timer = turntable.utils.Timer(nLoops=len(sequence), numPrints=10, verbose=False)
     for subject in sequence:
-        results.append(function(subject, *args, **kwargs))
+        results.append(method(subject, *args, **kwargs))
         timer.loop()
     timer.fin()
     # return results
@@ -142,7 +179,7 @@ def new_function_batch(sequence, function, *args, **kwargs):
     # res = []
     # print 'Processing '+str(len(main_arg_l))+' arguments'
     # for main_arg in main_arg_l:
-    # 	res.append(function(main_arg,*args,**kwargs))
+    # 	res.append(method(main_arg,*args,**kwargs))
 
     # print proc_name+' ends in '+str(time.time()-tic)
     return results
@@ -184,7 +221,41 @@ def thread(function, sequence, cores=None, runSeries=False, quiet=False):
 
     return results
 
-def parallel(sequence, function, processes=None, args=None, **kwargs):
+def parallel(collection, method, processes=None, args=None, **kwargs):
+    '''Processes a collection in parallel.
+
+    Parameters
+    ----------
+    collection : list
+        i.e. list of Record objects
+    method : method to call on each Record
+    processes : int
+        number of processes to run on [defaults to number of cores on machine]
+    batch_size : int
+        lenght of each batch [defaults to number of elements / number of processes]
+
+    Returns
+    -------
+    collection : list
+        list of Record objects after going through method called
+
+    Example
+    -------
+    adding 2 to every number in a range
+
+    >>> import turntable
+    >>> collection = range(100)
+    >>> def jam(record):
+    >>>     return record + 2
+    >>> collection = turntable.spin.parallel(collection, jam)
+
+    Note
+    ----
+
+    lambda functions do not work in parallel
+
+    '''
+
 
     if processes is None:
         # default to the number of cores, not exceeding 20
@@ -194,14 +265,14 @@ def parallel(sequence, function, processes=None, args=None, **kwargs):
     pool = mp.Pool(processes=processes)
     PROC = []
     tic = time.time()
-    for main_arg in sequence:
+    for main_arg in collection:
         if args is None:
             ARGS = (main_arg,)
         else:
             if isinstance(args, tuple) == False:
                 args = (args,)
             ARGS = (main_arg,) + args
-        PROC.append(pool.apply_async(function, args=ARGS, kwds=kwargs))
+        PROC.append(pool.apply_async(method, args=ARGS, kwds=kwargs))
     #RES = [p.get() for p in PROC]
     RES = []
     for p in PROC:
@@ -234,7 +305,7 @@ def new_function_dumping(
     return res
 
 def process_dump(
-        sequence,
+        collection,
         function,
         kwargs_to_dump,
         processes=None,
@@ -266,7 +337,7 @@ def process_dump(
     pool = mp.Pool(processes=processes)
     PROC = []
 
-    for main_arg in sequence:
+    for main_arg in collection:
         ARGS = arg_list(main_arg, args)
         PROC.append(
             pool.apply_async(new_function_dumping, args=ARGS, kwds=kwargs))
