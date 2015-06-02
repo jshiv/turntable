@@ -9,6 +9,8 @@ import pandas as pd
 import turntable.utils
 import traceback
 
+import turntable
+
 class RecordPress(object):
 
     '''This class auto-seralizes any attributes assigned to an instance and clears them from memmory
@@ -325,3 +327,39 @@ def collection_to_df(collection):
     '''
 
     return pd.concat([record.series for record in collection], axis=1).T
+
+
+def spin_frame(df, method):
+    ''' 
+    Runs the full turntable process on a pandas DataFrame
+
+    parameters
+    ----------
+    df : pandas.DataFrame
+        each row represents a record
+    method : def method(record)
+        function used to process each row
+
+    Returns
+    -------
+    df : pandas.DataFrame
+        DataFrame processed by method
+
+    Example
+    -------
+    >>> import pandas as pd
+    >>> import turntable
+    >>>
+    >>> df = pd.DataFrame({'Artist':"""Michael Jackson, Pink Floyd, Whitney Houston, Meat Loaf, Eagles, Fleetwood Mac, Bee Gees, AC/DC""".split(', '), 'Album':"""Thriller, The Dark Side of the Moon, The Bodyguard, Bat Out of Hell, Their Greatest Hits (1971–1975), Rumours, Saturday Night Fever, Back in Black""".split(', ')})
+    >>>
+    >>> def method(record):
+    >>>    record.cost = 40
+    >>>    return record
+    >>>
+    >>> turntable.press.spin_frame(df, method)
+    
+
+    '''
+    collection = build_collection(df)
+    collection = turntable.spin.batch(collection, method)
+    return collection_to_df(collection)
