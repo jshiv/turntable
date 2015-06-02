@@ -45,6 +45,7 @@ def series(collection, method, prints = 15, *args, **kwargs):
     >>> collection = range(100)
     >>> method = lambda x: x + 2
     >>> collection = turntable.spin.series(collection, method)
+    
     '''
 
     if 'verbose' in kwargs.keys():
