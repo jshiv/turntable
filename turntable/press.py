@@ -200,13 +200,42 @@ class SeriesLoader(object):
         object.__setattr__(self, name, value)
         # if the name of the assigned attribute is not a required name, go
         # ahead and pickle it
-        blacklisted_keys = ['series']
+        blacklisted_keys = ['series','pressed']
         if any([attr in name for attr in blacklisted_keys]) == False:
             if 'series' in self.__dict__.keys():
                 self.series[name] = value
             else:
                 self.series = pd.Series(dict(
                     [(key, value) for key, value in self.__dict__.items() if key not in blacklisted_keys]))
+
+
+
+# class PressedRecord:
+    
+#     '''Record is a container object with the special property "series". Any 
+#     property added to Record will also be added to the pandas.Series
+
+#     Properties
+#     ----------
+#     series : pandas.Series
+#         container for parameters set to the instance
+
+#     Methods
+#     -------
+#     set_attributes : assigns items of a dictionary to the class and to the series parameter
+#     runMethod : runs a method by a string call
+
+#     Examples
+#     --------
+#     lets see how we can add a propertie to the record object
+
+#     >>> record = Record(first_item = 'one')
+#     >>> record.second_item = 'two'
+#     >>> print record.series
+#     '''
+#     mint = True
+
+
 
 
 class Record(RecordSetter, SeriesLoader):
@@ -232,36 +261,72 @@ class Record(RecordSetter, SeriesLoader):
     >>> record.second_item = 'two'
     >>> print record.series
     '''
-
+    mint = True
     def __init__(self, **kwargs):
         self.set_attributes(kwargs)
 
 
-def load_record(index_series_tuple, kwargs):
+# def load_record(index_series_tuple, kwargs):
+#     '''
+#     Generates an instance of Record() from a tuple of the form (index, pandas.Series) 
+#     with associated parameters kwargs
+
+#     Paremeters
+#     ----------
+#     index_series_tuple : tuple
+#         tuple consisting of (index, pandas.Series)
+#     kwargs : dict
+#         aditional arguments
+
+#     Returns
+#     -------
+#     Record : object
+
+#     '''
+
+#     index_record = index_series_tuple[0]
+#     series = index_series_tuple[1]
+#     record = Record()
+#     record.series = series
+#     record.index_record = index_record
+#     record.set_attributes(kwargs)
+#     return record
+
+
+def load_record(record, **kwargs):
     '''
-    Generates an instance of Record() from a tuple of the form (index, pandas.Series) 
-    with associated parameters kwargs
+    Takes an instance of Record() and named arguments from **kwargs
+    returns the record instance with the named arguemnts added to the record
+
 
     Paremeters
     ----------
-    index_series_tuple : tuple
-        tuple consisting of (index, pandas.Series)
-    kwargs : dict
-        aditional arguments
+    record : Record()
+        either full or empty record object
+    **kwargs : named arguments
+        first_arg = 1, second_arg = 'two'
+
 
     Returns
     -------
-    Record : object
+    record.first_arg -> 1
+    record.second_arg -> 'two'
+    
+    Examples
+    --------
+    >>> import turntable
+    >>> record = load_record(turntable.press.Record(), first_arg = 1, second_arg = 'two')
+    >>> record.series
+    first_arg       1
+    second_arg    two
 
     '''
-
-    index_record = index_series_tuple[0]
-    series = index_series_tuple[1]
-    record = Record()
-    record.series = series
-    record.index_record = index_record
+    
     record.set_attributes(kwargs)
     return record
+
+
+
 
 def build_collection(df, **kwargs):
     '''
@@ -307,7 +372,7 @@ def build_collection(df, **kwargs):
     else:
         d = df.T.to_dict(outtype='series')
 
-    collection = [load_record(item, kwargs) for item in d.items()]
+    collection = [load_record(Record(), index_record = item[0], series = item[1], **kwargs) for item in d.items()]
     return collection
 
 def collection_to_df(collection):
