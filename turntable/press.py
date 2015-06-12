@@ -144,9 +144,9 @@ class RecordSetter:
     '''
 
     def __init__(self, **kwargs):
-        self.set_attributes(kwargs)
+        self._set_attributes(kwargs)
 
-    def set_attributes(self, kwargs):
+    def _set_attributes(self, kwargs):
         '''
         Initalizes the given argument structure as properties of the class
         to be used by name in specific method execution.
@@ -162,6 +162,35 @@ class RecordSetter:
         for key, value in kwargs.items():
             setattr(self, key, value)
             # print key, value
+    def load(self, **kwargs):
+        '''
+        Takes an instance of Record() and named arguments from **kwargs
+        returns the record instance with the named arguemnts added to the record
+
+
+        Paremeters
+        ----------
+        **kwargs : named arguments
+            first_arg = 1, second_arg = 'two'
+
+
+        Returns
+        -------
+        record.first_arg -> 1
+        record.second_arg -> 'two'
+
+        Examples
+        --------
+        >>> import turntable
+        >>> record = turntable.press.Record(first_arg = 1)
+        >>> record = record.load(second_arg = 'two')
+        >>> record.series
+        first_arg       1
+        second_arg    two
+        '''
+        
+        self._set_attributes(kwargs)
+
 
     def run_method(self, method):
         '''
@@ -222,7 +251,7 @@ class SeriesLoader(object):
 
 #     Methods
 #     -------
-#     set_attributes : assigns items of a dictionary to the class and to the series parameter
+#     _set_attributes : assigns items of a dictionary to the class and to the series parameter
 #     runMethod : runs a method by a string call
 
 #     Examples
@@ -250,7 +279,8 @@ class Record(RecordSetter, SeriesLoader):
 
     Methods
     -------
-    set_attributes : assigns items of a dictionary to the class and to the series parameter
+    load : assigns items of a **kwargs to the class and to the series parameter
+    _set_attributes : assigns items of a dictionary to the class and to the series parameter
     runMethod : runs a method by a string call
 
     Examples
@@ -263,7 +293,7 @@ class Record(RecordSetter, SeriesLoader):
     '''
     mint = True
     def __init__(self, **kwargs):
-        self.set_attributes(kwargs)
+        self._set_attributes(kwargs)
 
 
 # def load_record(index_series_tuple, kwargs):
@@ -289,7 +319,7 @@ class Record(RecordSetter, SeriesLoader):
 #     record = Record()
 #     record.series = series
 #     record.index_record = index_record
-#     record.set_attributes(kwargs)
+#     record._set_attributes(kwargs)
 #     return record
 
 
@@ -322,7 +352,7 @@ def load_record(record, **kwargs):
 
     '''
     
-    record.set_attributes(kwargs)
+    record._set_attributes(kwargs)
     return record
 
 
