@@ -191,6 +191,34 @@ class RecordSetter:
         
         self._set_attributes(kwargs)
 
+    def load_from_dict(self, attribute_dict):
+        '''
+        Takes an instance of Record() and named arguments from attribute_dict
+        returns the record instance with the named arguemnts added to the record
+
+
+        Paremeters
+        ----------
+        **kwargs : named arguments
+            first_arg = 1, second_arg = 'two'
+
+
+        Returns
+        -------
+        record.first_arg -> 1
+        record.second_arg -> 'two'
+
+        Examples
+        --------
+        >>> import turntable
+        >>> record = turntable.press.Record(first_arg = 1)
+        >>> record = record.load_from_dict(dict(second_arg = 'two'))
+        >>> record.series
+        first_arg       1
+        second_arg    two
+        '''
+        
+        self._set_attributes(attribute_dict)
 
     def run_method(self, method):
         '''
@@ -229,7 +257,7 @@ class SeriesLoader(object):
         object.__setattr__(self, name, value)
         # if the name of the assigned attribute is not a required name, go
         # ahead and pickle it
-        blacklisted_keys = ['series','pressed']
+        blacklisted_keys = ['series']
         if any([attr in name for attr in blacklisted_keys]) == False:
             if 'series' in self.__dict__.keys():
                 self.series[name] = value
