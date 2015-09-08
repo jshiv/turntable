@@ -213,9 +213,9 @@ def thread(function, sequence, cores=None, runSeries=False, quiet=False):
 
     if quiet is False:
         if cores is None:
-            print "Elapsed time: %s  :-)" % str(elapsed)
+            print "Elapsed time: %s  :-)\n" % str(elapsed)
         else:
-            print "Elapsed time: %s  on %s threads :-)" % (str(elapsed), str(cores))
+            print "Elapsed time: %s  on %s threads :-)\n" % (str(elapsed), str(cores))
     # Noes:
     # import functools
     # abc = map(functools.partial(sb.dist, distName = 'weibull'), wbldfList)
@@ -288,7 +288,7 @@ def parallel(collection, method, processes=None, args=None, **kwargs):
 
     toc = time.time()
     elapsed = toc - tic
-    print "Elapsed time: %s  on %s processes :-)" % (str(elapsed), str(processes))
+    print "Elapsed time: %s  on %s processes :-)\n" % (str(elapsed), str(processes))
 
     return RES
 
